@@ -1,0 +1,19 @@
+services:
+  drawdb:
+    image: node:20-alpine
+    container_name: drawdb
+    ports:
+      - "8745:8745"
+    environment:
+      - SERVER_ADDRESS=172.20.14.155
+      - VITE_WS_SERVER=ws://${SERVER_ADDRESS}:8745/ws
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: sh -c "npm install && npm run dev -- --host"
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
